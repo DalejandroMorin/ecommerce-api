@@ -1,0 +1,17 @@
+package com.david.ecommerce.usuario.dto;
+
+import com.david.ecommerce.usuario.model.Usuario;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UsuarioRequestDTO {
+    private String nombre;
+    private String email;
+    private String password;
+    private String direccion;
+    private Usuario.Rol rol;
+}
