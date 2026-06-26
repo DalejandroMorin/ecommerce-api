@@ -1,6 +1,7 @@
 package com.david.ecommerce.carrito.dto;
 
-import com.david.ecommerce.carrito.model.Carrito;
+import com.david.ecommerce.domain.carrito.Carrito;
+import com.david.ecommerce.infrastructure.persistence.jpa.entity.CarritoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class CarritoResponseDTO {
     private BigDecimal total;
     private Integer cantidadTotalItems;
 
-    public CarritoResponseDTO(Carrito carrito) {
+    public CarritoResponseDTO(CarritoEntity carrito) {
         this.id = carrito.getId();
         this.usuarioId = carrito.getUsuario().getId();
         this.usuarioNombre = carrito.getUsuario().getNombre();
@@ -34,5 +35,21 @@ public class CarritoResponseDTO {
         this.cantidadTotalItems = items.stream()
                 .mapToInt(ItemCarritoDTO::getCantidad)
                 .sum();
+    }
+
+    public static CarritoResponseDTO fromDomain(Carrito carrito) {
+        CarritoResponseDTO dto = new CarritoResponseDTO();
+        dto.setId(carrito.getId());
+        dto.setUsuarioId(carrito.getUsuarioId());
+        dto.setItems(carrito.getItems().stream()
+                .map(ItemCarritoDTO::fromDomain)
+                .collect(Collectors.toList()));
+        dto.setTotal(dto.getItems().stream()
+                .map(ItemCarritoDTO::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+        dto.setCantidadTotalItems(dto.getItems().stream()
+                .mapToInt(ItemCarritoDTO::getCantidad)
+                .sum());
+        return dto;
     }
 }

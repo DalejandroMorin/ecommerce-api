@@ -1,8 +1,7 @@
 package com.david.ecommerce.carrito.controller;
 
+import com.david.ecommerce.application.carrito.CarritoUseCase;
 import com.david.ecommerce.carrito.dto.CarritoResponseDTO;
-import com.david.ecommerce.carrito.service.CarritoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,41 +9,40 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/carrito")
 public class CarritoController {
 
-    private final CarritoService carritoService;
+    private final CarritoUseCase carritoUseCase;
 
-    @Autowired
-    public CarritoController(CarritoService carritoService) {
-        this.carritoService = carritoService;
+    public CarritoController(CarritoUseCase carritoUseCase) {
+        this.carritoUseCase = carritoUseCase;
     }
 
     @GetMapping
     public ResponseEntity<CarritoResponseDTO> obtenerCarrito(@RequestParam Long usuarioId) {
-        return ResponseEntity.ok(carritoService.obtenerCarrito(usuarioId));
+        return ResponseEntity.ok(carritoUseCase.obtenerCarrito(usuarioId));
     }
 
     @PostMapping("/agregar")
     public ResponseEntity<CarritoResponseDTO> agregarProducto(@RequestParam Long usuarioId,
-                                                              @RequestParam Long productoId,
-                                                              @RequestParam Integer cantidad) {
-        return ResponseEntity.ok(carritoService.agregarProducto(usuarioId, productoId, cantidad));
+                                                               @RequestParam Long productoId,
+                                                               @RequestParam Integer cantidad) {
+        return ResponseEntity.ok(carritoUseCase.agregarProducto(usuarioId, productoId, cantidad));
     }
 
     @PutMapping("/items/{itemId}")
     public ResponseEntity<CarritoResponseDTO> actualizarCantidad(@PathVariable Long itemId,
-                                                                 @RequestParam Long usuarioId,
-                                                                 @RequestParam Integer nuevaCantidad) {
-        return ResponseEntity.ok(carritoService.actualizarCantidad(usuarioId, itemId, nuevaCantidad));
+                                                                  @RequestParam Long usuarioId,
+                                                                  @RequestParam Integer nuevaCantidad) {
+        return ResponseEntity.ok(carritoUseCase.actualizarCantidad(usuarioId, itemId, nuevaCantidad));
     }
 
     @DeleteMapping("/items/{itemId}")
     public ResponseEntity<CarritoResponseDTO> eliminarItem(@PathVariable Long itemId,
                                                            @RequestParam Long usuarioId) {
-        return ResponseEntity.ok(carritoService.eliminarItem(usuarioId, itemId));
+        return ResponseEntity.ok(carritoUseCase.eliminarItem(usuarioId, itemId));
     }
 
     @DeleteMapping("/vaciar")
     public ResponseEntity<Void> vaciarCarrito(@RequestParam Long usuarioId) {
-        carritoService.vaciarCarrito(usuarioId);
+        carritoUseCase.vaciarCarrito(usuarioId);
         return ResponseEntity.noContent().build();
     }
 }
