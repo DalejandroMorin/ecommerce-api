@@ -1,0 +1,45 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Project: ecommerce-api
+  Tech stack: Java 21, Spring Boot 4.1 (webmvc, data-jpa, security, validation), Maven (mvnw), PostgreSQL, JWT (jjwt 0.12.6), Lombok, SLF4J
+  Architecture: Mixed — migrating toward hexagonal/clean. Producto module fully hexagonal; auth, usuario, carrito, pedido traditional layered.
+  Testing: JUnit 5 + Mockito + AssertJ + MockMvc via ./mvnw test (Maven Surefire). 10 test files across 4 modules.
+  Style: Spanish identifiers, constructor injection, custom BusinessException hierarchy, no Lombok on domain/services.
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns (Spanish identifiers, constructor injection)
+    tdd: true
+    test_command: "./mvnw test"
+  verify:
+    test_command: "./mvnw test"
+    build_command: "./mvnw clean compile"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
+
+testing:
+  strict_tdd: true
+  runner: Maven Surefire
+  command: "./mvnw test"
+  layers:
+    unit: "JUnit 5 + Mockito + AssertJ"
+    integration: "@WebMvcTest, @DataJpaTest (via spring-boot-starter-test)"
+    e2e: null
+  coverage: false
+  linter: false
+  formatter: false
+  type_checker: false

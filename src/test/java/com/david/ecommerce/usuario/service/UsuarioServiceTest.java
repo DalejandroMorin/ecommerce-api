@@ -1,10 +1,10 @@
 package com.david.ecommerce.usuario.service;
 
+import com.david.ecommerce.application.usuario.UsuarioUseCase;
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.common.exception.ValidacionNegocioException;
+import com.david.ecommerce.domain.usuario.UsuarioRepository;
 import com.david.ecommerce.usuario.dto.UsuarioRequestDTO;
-import com.david.ecommerce.usuario.model.Usuario;
-import com.david.ecommerce.usuario.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +21,7 @@ class UsuarioServiceTest {
     private UsuarioRepository usuarioRepository;
 
     @InjectMocks
-    private UsuarioService usuarioService;
+    private UsuarioUseCase usuarioUseCase;
 
     @Test
     void crearUsuario_EmailDuplicado_LanzaExcepcion() {
@@ -31,7 +31,7 @@ class UsuarioServiceTest {
 
         when(usuarioRepository.existsByEmail("test@email.com")).thenReturn(true);
 
-        assertThatThrownBy(() -> usuarioService.crear(dto))
+        assertThatThrownBy(() -> usuarioUseCase.crear(dto))
                 .isInstanceOf(EmailDuplicadoException.class)
                 .hasMessageContaining("ya está registrado");
     }
@@ -42,7 +42,7 @@ class UsuarioServiceTest {
         dto.setEmail("nuevo@email.com");
         dto.setPassword("123");
 
-        assertThatThrownBy(() -> usuarioService.crear(dto))
+        assertThatThrownBy(() -> usuarioUseCase.crear(dto))
                 .isInstanceOf(ValidacionNegocioException.class)
                 .hasMessageContaining("contraseña");
     }

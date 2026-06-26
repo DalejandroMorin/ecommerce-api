@@ -1,6 +1,6 @@
 package com.david.ecommerce.pedido.dto;
 
-import com.david.ecommerce.pedido.model.Pedido;
+import com.david.ecommerce.domain.pedido.Pedido;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,15 +23,21 @@ public class PedidoResponseDTO {
     private Pedido.EstadoPedido estado;
     private List<DetallePedidoDTO> detalles;
 
-    public PedidoResponseDTO(Pedido pedido) {
-        this.id = pedido.getId();
-        this.usuarioId = pedido.getUsuario().getId();
-        this.usuarioNombre = pedido.getUsuario().getNombre();
-        this.fechaPedido = pedido.getFechaPedido();
-        this.total = pedido.getTotal();
-        this.estado = pedido.getEstado();
-        this.detalles = pedido.getDetalles().stream()
-                .map(DetallePedidoDTO::new)
-                .collect(Collectors.toList());
+    public static PedidoResponseDTO fromDomain(Pedido pedido) {
+        return fromDomain(pedido, null);
+    }
+
+    public static PedidoResponseDTO fromDomain(Pedido pedido, String usuarioNombre) {
+        PedidoResponseDTO dto = new PedidoResponseDTO();
+        dto.setId(pedido.getId());
+        dto.setUsuarioId(pedido.getUsuarioId());
+        dto.setUsuarioNombre(usuarioNombre);
+        dto.setFechaPedido(pedido.getFechaPedido());
+        dto.setTotal(pedido.getTotal());
+        dto.setEstado(pedido.getEstado());
+        dto.setDetalles(pedido.getDetalles().stream()
+                .map(DetallePedidoDTO::fromDomain)
+                .collect(Collectors.toList()));
+        return dto;
     }
 }

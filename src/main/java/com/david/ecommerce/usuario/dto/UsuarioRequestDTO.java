@@ -1,6 +1,6 @@
 package com.david.ecommerce.usuario.dto;
 
-import com.david.ecommerce.usuario.model.Usuario;
+import com.david.ecommerce.domain.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

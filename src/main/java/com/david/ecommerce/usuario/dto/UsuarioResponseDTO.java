@@ -1,6 +1,6 @@
 package com.david.ecommerce.usuario.dto;
 
-import com.david.ecommerce.usuario.model.Usuario;
+import com.david.ecommerce.domain.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,13 +18,14 @@ public class UsuarioResponseDTO {
     private Usuario.Rol rol;
     private LocalDateTime fechaRegistro;
 
-    // Constructor para mapear desde la entidad
-    public UsuarioResponseDTO(Usuario usuario) {
-        this.id = usuario.getId();
-        this.nombre = usuario.getNombre();
-        this.email = usuario.getEmail();
-        this.direccion = usuario.getDireccion();
-        this.rol = usuario.getRol();
-        this.fechaRegistro = usuario.getFechaRegistro();
+    public static UsuarioResponseDTO fromDomain(Usuario usuario) {
+        UsuarioResponseDTO dto = new UsuarioResponseDTO();
+        dto.setId(usuario.getId());
+        dto.setNombre(usuario.getNombre());
+        dto.setEmail(usuario.getEmail());
+        dto.setDireccion(usuario.getDireccion());
+        dto.setRol(usuario.getRol());
+        dto.setFechaRegistro(usuario.getFechaRegistro());
+        return dto;
     }
 }
