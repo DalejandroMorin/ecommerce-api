@@ -1,6 +1,6 @@
 package com.david.ecommerce.application.carrito;
 
-import com.david.ecommerce.carrito.dto.CarritoResponseDTO;
+import com.david.ecommerce.infrastructure.rest.carrito.CarritoResponseDTO;
 import com.david.ecommerce.common.exception.RecursoNoEncontradoException;
 import com.david.ecommerce.common.exception.StockInsuficienteException;
 import com.david.ecommerce.common.exception.ValidacionNegocioException;

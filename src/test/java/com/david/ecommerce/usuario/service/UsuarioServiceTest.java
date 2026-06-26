@@ -4,7 +4,7 @@ import com.david.ecommerce.application.usuario.UsuarioUseCase;
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.common.exception.ValidacionNegocioException;
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
-import com.david.ecommerce.usuario.dto.UsuarioRequestDTO;
+import com.david.ecommerce.infrastructure.rest.usuario.UsuarioRequestDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
