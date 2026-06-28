@@ -1,6 +1,8 @@
 package com.david.ecommerce.infrastructure.rest.usuario;
 
 import com.david.ecommerce.application.usuario.UsuarioUseCase;
+import com.david.ecommerce.application.usuario.dto.UsuarioRequestDTO;
+import com.david.ecommerce.application.usuario.dto.UsuarioResponseDTO;
 import com.david.ecommerce.common.exception.GlobalExceptionHandler;
 import com.david.ecommerce.common.exception.RecursoNoEncontradoException;
 import com.david.ecommerce.domain.usuario.Usuario;

@@ -1,6 +1,5 @@
-package com.david.ecommerce.infrastructure.rest.usuario;
+package com.david.ecommerce.application.auth.dto;
 
-import com.david.ecommerce.domain.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioRequestDTO {
+public class RegisterRequestDTO {
     private String nombre;
     private String email;
     private String password;
     private String direccion;
-    private Usuario.Rol rol;
 }

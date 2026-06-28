@@ -2,6 +2,7 @@ package com.david.ecommerce.infrastructure.rest.pedido;
 
 import com.david.ecommerce.application.pedido.PagoSimuladoUseCase;
 import com.david.ecommerce.application.pedido.PedidoUseCase;
+import com.david.ecommerce.application.pedido.dto.PedidoResponseDTO;
 import com.david.ecommerce.domain.pedido.Pedido;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

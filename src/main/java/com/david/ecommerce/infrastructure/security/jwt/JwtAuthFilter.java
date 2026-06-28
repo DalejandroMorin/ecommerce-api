@@ -2,7 +2,7 @@ package com.david.ecommerce.infrastructure.security.jwt;
 
 import com.david.ecommerce.domain.auth.TokenService;
 import com.david.ecommerce.domain.usuario.Usuario;
-import com.david.ecommerce.infrastructure.security.UserDetailsImpl;
+import com.david.ecommerce.application.auth.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

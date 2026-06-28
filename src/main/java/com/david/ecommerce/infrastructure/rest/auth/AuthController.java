@@ -1,6 +1,9 @@
 package com.david.ecommerce.infrastructure.rest.auth;
 
 import com.david.ecommerce.application.auth.AuthUseCase;
+import com.david.ecommerce.application.auth.dto.AuthResponseDTO;
+import com.david.ecommerce.application.auth.dto.LoginRequestDTO;
+import com.david.ecommerce.application.auth.dto.RegisterRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,6 @@
-package com.david.ecommerce.infrastructure.rest.carrito;
+package com.david.ecommerce.application.carrito.dto;
 
 import com.david.ecommerce.domain.carrito.ItemCarrito;
-import com.david.ecommerce.infrastructure.persistence.jpa.entity.ItemCarritoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,15 +18,6 @@ public class ItemCarritoDTO {
     private Integer cantidad;
     private BigDecimal precioUnitario;
     private BigDecimal subtotal;
-
-    public ItemCarritoDTO(ItemCarritoEntity item) {
-        this.id = item.getId();
-        this.productoId = item.getProducto().getId();
-        this.productoNombre = item.getProducto().getNombre();
-        this.cantidad = item.getCantidad();
-        this.precioUnitario = item.getPrecioUnitario();
-        this.subtotal = item.getPrecioUnitario().multiply(BigDecimal.valueOf(item.getCantidad()));
-    }
 
     public static ItemCarritoDTO fromDomain(ItemCarrito item) {
         ItemCarritoDTO dto = new ItemCarritoDTO();

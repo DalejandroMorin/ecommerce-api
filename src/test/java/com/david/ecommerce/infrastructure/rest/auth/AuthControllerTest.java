@@ -1,6 +1,9 @@
 package com.david.ecommerce.infrastructure.rest.auth;
 
 import com.david.ecommerce.application.auth.AuthUseCase;
+import com.david.ecommerce.application.auth.dto.AuthResponseDTO;
+import com.david.ecommerce.application.auth.dto.LoginRequestDTO;
+import com.david.ecommerce.application.auth.dto.RegisterRequestDTO;
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.common.exception.GlobalExceptionHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,14 +1,14 @@
 package com.david.ecommerce.auth.service;
 
 import com.david.ecommerce.application.auth.AuthUseCase;
-import com.david.ecommerce.infrastructure.rest.auth.AuthResponseDTO;
-import com.david.ecommerce.infrastructure.rest.auth.LoginRequestDTO;
-import com.david.ecommerce.infrastructure.rest.auth.RegisterRequestDTO;
+import com.david.ecommerce.application.auth.dto.AuthResponseDTO;
+import com.david.ecommerce.application.auth.dto.LoginRequestDTO;
+import com.david.ecommerce.application.auth.dto.RegisterRequestDTO;
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.domain.auth.TokenService;
 import com.david.ecommerce.domain.usuario.Usuario;
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
-import com.david.ecommerce.infrastructure.security.UserDetailsImpl;
+import com.david.ecommerce.application.auth.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

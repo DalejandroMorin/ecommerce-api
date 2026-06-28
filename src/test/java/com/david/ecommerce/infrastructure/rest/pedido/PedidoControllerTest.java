@@ -2,6 +2,8 @@ package com.david.ecommerce.infrastructure.rest.pedido;
 
 import com.david.ecommerce.application.pedido.PagoSimuladoUseCase;
 import com.david.ecommerce.application.pedido.PedidoUseCase;
+import com.david.ecommerce.application.pedido.dto.DetallePedidoDTO;
+import com.david.ecommerce.application.pedido.dto.PedidoResponseDTO;
 import com.david.ecommerce.common.exception.GlobalExceptionHandler;
 import com.david.ecommerce.common.exception.RecursoNoEncontradoException;
 import com.david.ecommerce.common.exception.StockInsuficienteException;

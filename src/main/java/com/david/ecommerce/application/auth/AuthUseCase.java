@@ -1,9 +1,9 @@
 package com.david.ecommerce.application.auth;
 
-import com.david.ecommerce.infrastructure.rest.auth.AuthResponseDTO;
-import com.david.ecommerce.infrastructure.rest.auth.LoginRequestDTO;
-import com.david.ecommerce.infrastructure.rest.auth.RegisterRequestDTO;
-import com.david.ecommerce.infrastructure.security.UserDetailsImpl;
+import com.david.ecommerce.application.auth.dto.AuthResponseDTO;
+import com.david.ecommerce.application.auth.dto.LoginRequestDTO;
+import com.david.ecommerce.application.auth.dto.RegisterRequestDTO;
+import com.david.ecommerce.application.auth.UserDetailsImpl;
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.domain.auth.TokenService;
 import com.david.ecommerce.domain.usuario.Usuario;

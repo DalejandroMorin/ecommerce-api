@@ -14,7 +14,7 @@ import com.david.ecommerce.domain.producto.Producto;
 import com.david.ecommerce.domain.producto.ProductoRepository;
 import com.david.ecommerce.domain.usuario.Usuario;
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
-import com.david.ecommerce.infrastructure.rest.pedido.PedidoResponseDTO;
+import com.david.ecommerce.application.pedido.dto.PedidoResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

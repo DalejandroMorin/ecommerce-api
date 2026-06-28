@@ -2,8 +2,8 @@ package com.david.ecommerce.application.producto;
 
 import com.david.ecommerce.domain.producto.Producto;
 import com.david.ecommerce.domain.producto.ProductoRepository;
-import com.david.ecommerce.infrastructure.rest.producto.ProductoRequestDTO;
-import com.david.ecommerce.infrastructure.rest.producto.ProductoResponseDTO;
+import com.david.ecommerce.application.producto.dto.ProductoRequestDTO;
+import com.david.ecommerce.application.producto.dto.ProductoResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

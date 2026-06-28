@@ -1,4 +1,4 @@
-package com.david.ecommerce.infrastructure.rest.pedido;
+package com.david.ecommerce.application.pedido.dto;
 
 import com.david.ecommerce.domain.pedido.Pedido;
 import lombok.AllArgsConstructor;

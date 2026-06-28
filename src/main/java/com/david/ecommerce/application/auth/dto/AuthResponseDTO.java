@@ -1,4 +1,4 @@
-package com.david.ecommerce.infrastructure.rest.auth;
+package com.david.ecommerce.application.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequestDTO {
+public class AuthResponseDTO {
+    private String token;
     private String email;
-    private String password;
+    private String nombre;
+    private String rol;
 }

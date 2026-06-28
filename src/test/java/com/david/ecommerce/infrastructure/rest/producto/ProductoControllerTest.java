@@ -1,6 +1,8 @@
 package com.david.ecommerce.infrastructure.rest.producto;
 
 import com.david.ecommerce.application.producto.ProductoUseCase;
+import com.david.ecommerce.application.producto.dto.ProductoRequestDTO;
+import com.david.ecommerce.application.producto.dto.ProductoResponseDTO;
 import com.david.ecommerce.common.exception.GlobalExceptionHandler;
 import com.david.ecommerce.common.exception.RecursoNoEncontradoException;
 import com.david.ecommerce.domain.producto.Producto;

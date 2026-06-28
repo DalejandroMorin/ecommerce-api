@@ -1,6 +1,8 @@
 package com.david.ecommerce.infrastructure.rest.usuario;
 
 import com.david.ecommerce.application.usuario.UsuarioUseCase;
+import com.david.ecommerce.application.usuario.dto.UsuarioRequestDTO;
+import com.david.ecommerce.application.usuario.dto.UsuarioResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

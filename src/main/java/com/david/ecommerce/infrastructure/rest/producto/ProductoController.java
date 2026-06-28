@@ -1,6 +1,8 @@
 package com.david.ecommerce.infrastructure.rest.producto;
 
 import com.david.ecommerce.application.producto.ProductoUseCase;
+import com.david.ecommerce.application.producto.dto.ProductoRequestDTO;
+import com.david.ecommerce.application.producto.dto.ProductoResponseDTO;
 import com.david.ecommerce.domain.producto.Producto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

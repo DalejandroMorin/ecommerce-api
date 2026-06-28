@@ -1,4 +1,4 @@
-package com.david.ecommerce.infrastructure.rest.producto;
+package com.david.ecommerce.application.producto.dto;
 
 import com.david.ecommerce.domain.producto.Producto;
 import lombok.AllArgsConstructor;

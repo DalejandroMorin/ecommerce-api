@@ -1,6 +1,8 @@
 package com.david.ecommerce.infrastructure.rest.carrito;
 
 import com.david.ecommerce.application.carrito.CarritoUseCase;
+import com.david.ecommerce.application.carrito.dto.CarritoResponseDTO;
+import com.david.ecommerce.application.carrito.dto.ItemCarritoDTO;
 import com.david.ecommerce.common.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

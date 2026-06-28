@@ -1,4 +1,4 @@
-package com.david.ecommerce.infrastructure.rest.usuario;
+package com.david.ecommerce.application.usuario.dto;
 
 import com.david.ecommerce.domain.usuario.Usuario;
 import lombok.AllArgsConstructor;

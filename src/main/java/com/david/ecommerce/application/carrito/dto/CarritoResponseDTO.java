@@ -1,7 +1,6 @@
-package com.david.ecommerce.infrastructure.rest.carrito;
+package com.david.ecommerce.application.carrito.dto;
 
 import com.david.ecommerce.domain.carrito.Carrito;
-import com.david.ecommerce.infrastructure.persistence.jpa.entity.CarritoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,21 +20,6 @@ public class CarritoResponseDTO {
     private List<ItemCarritoDTO> items;
     private BigDecimal total;
     private Integer cantidadTotalItems;
-
-    public CarritoResponseDTO(CarritoEntity carrito) {
-        this.id = carrito.getId();
-        this.usuarioId = carrito.getUsuario().getId();
-        this.usuarioNombre = carrito.getUsuario().getNombre();
-        this.items = carrito.getItems().stream()
-                .map(ItemCarritoDTO::new)
-                .collect(Collectors.toList());
-        this.total = items.stream()
-                .map(ItemCarritoDTO::getSubtotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        this.cantidadTotalItems = items.stream()
-                .mapToInt(ItemCarritoDTO::getCantidad)
-                .sum();
-    }
 
     public static CarritoResponseDTO fromDomain(Carrito carrito) {
         CarritoResponseDTO dto = new CarritoResponseDTO();
