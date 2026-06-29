@@ -3,7 +3,7 @@ package com.david.ecommerce.application.auth;
 import com.david.ecommerce.application.auth.dto.AuthResponseDTO;
 import com.david.ecommerce.application.auth.dto.LoginRequestDTO;
 import com.david.ecommerce.application.auth.dto.RegisterRequestDTO;
-import com.david.ecommerce.application.auth.UserDetailsImpl;
+import com.david.ecommerce.infrastructure.security.UserDetailsImpl;
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.domain.auth.TokenService;
 import com.david.ecommerce.domain.usuario.Usuario;
@@ -46,10 +46,12 @@ public class AuthUseCase {
         Usuario usuario = new Usuario();
         usuario.setNombre(dto.getNombre());
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+        usuario.setPassword(dto.getPassword());
         usuario.setDireccion(dto.getDireccion());
         usuario.setRol(Usuario.Rol.CLIENTE);
+        usuario.validar();
 
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuarioRepository.save(usuario);
 
         String token = tokenService.generateToken(usuario.getEmail(), usuario.getRol().name());

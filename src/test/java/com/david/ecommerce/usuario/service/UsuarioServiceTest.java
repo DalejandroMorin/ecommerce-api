@@ -2,7 +2,7 @@ package com.david.ecommerce.usuario.service;
 
 import com.david.ecommerce.application.usuario.UsuarioUseCase;
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
-import com.david.ecommerce.common.exception.ValidacionNegocioException;
+
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
 import com.david.ecommerce.application.usuario.dto.UsuarioRequestDTO;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class UsuarioServiceTest {
         dto.setPassword("123");
 
         assertThatThrownBy(() -> usuarioUseCase.crear(dto))
-                .isInstanceOf(ValidacionNegocioException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("contraseña");
     }
 }

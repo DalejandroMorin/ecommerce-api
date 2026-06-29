@@ -4,7 +4,7 @@ schema: spec-driven
 context: |
   Project: ecommerce-api
   Tech stack: Java 21, Spring Boot 4.1 (webmvc, data-jpa, security, validation), Maven (mvnw), PostgreSQL, JWT (jjwt 0.12.6), Lombok, SLF4J
-  Architecture: Mixed — migrating toward hexagonal/clean. Producto module fully hexagonal; auth, usuario, carrito, pedido traditional layered.
+  Architecture: Hexagonal/clean architecture. All modules (producto, usuario, auth, carrito, pedido) follow hexagonal structure with domain, application, and infrastructure layers.
   Testing: JUnit 5 + Mockito + AssertJ + MockMvc via ./mvnw test (Maven Surefire). 10 test files across 4 modules.
   Style: Spanish identifiers, constructor injection, custom BusinessException hierarchy, no Lombok on domain/services.
 

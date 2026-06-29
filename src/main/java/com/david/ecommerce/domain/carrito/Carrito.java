@@ -15,6 +15,11 @@ public class Carrito {
         items.add(item);
     }
 
+    public void validar() {
+        if (items == null || items.isEmpty())
+            throw new IllegalArgumentException("El carrito no puede estar vacío");
+    }
+
     public void removerItem(ItemCarrito item) {
         items.remove(item);
     }

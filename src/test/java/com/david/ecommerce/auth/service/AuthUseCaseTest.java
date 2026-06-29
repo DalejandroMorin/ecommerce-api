@@ -8,7 +8,7 @@ import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.domain.auth.TokenService;
 import com.david.ecommerce.domain.usuario.Usuario;
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
-import com.david.ecommerce.application.auth.UserDetailsImpl;
+import com.david.ecommerce.infrastructure.security.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,6 +69,19 @@ class AuthUseCaseTest {
         assertThat(result.getNombre()).isEqualTo("Edgar");
         assertThat(result.getRol()).isEqualTo("CLIENTE");
         verify(usuarioRepository).save(any(Usuario.class));
+    }
+
+    @Test
+    @DisplayName("Lanzar excepción si la contraseña es corta — validar antes de codificar")
+    void register_PasswordCorta_LanzaExcepcionAntesDeCodificar() {
+        RegisterRequestDTO dto = new RegisterRequestDTO("Edgar", "edgar@email.com", "123", "Calle 123");
+
+        assertThatThrownBy(() -> authUseCase.register(dto))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("contraseña");
+
+        verify(passwordEncoder, never()).encode(any());
+        verify(usuarioRepository, never()).save(any());
     }
 
     @Test

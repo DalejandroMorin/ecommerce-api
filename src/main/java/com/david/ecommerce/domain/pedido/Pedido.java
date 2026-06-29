@@ -30,6 +30,15 @@ public class Pedido {
         detalles.add(detalle);
     }
 
+    public void validar() {
+        if (detalles == null || detalles.isEmpty())
+            throw new IllegalArgumentException("El pedido debe tener al menos un detalle");
+        for (DetallePedido d : detalles) {
+            if (d.getCantidad() == null || d.getCantidad() <= 0)
+                throw new IllegalArgumentException("La cantidad del detalle debe ser positiva");
+        }
+    }
+
     public void removerDetalle(DetallePedido detalle) {
         detalles.remove(detalle);
     }

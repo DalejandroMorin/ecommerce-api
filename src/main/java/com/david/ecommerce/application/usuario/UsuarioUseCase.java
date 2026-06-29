@@ -2,7 +2,6 @@ package com.david.ecommerce.application.usuario;
 
 import com.david.ecommerce.common.exception.EmailDuplicadoException;
 import com.david.ecommerce.common.exception.RecursoNoEncontradoException;
-import com.david.ecommerce.common.exception.ValidacionNegocioException;
 import com.david.ecommerce.domain.usuario.Usuario;
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
 import com.david.ecommerce.application.usuario.dto.UsuarioRequestDTO;
@@ -44,17 +43,11 @@ public class UsuarioUseCase {
             throw new EmailDuplicadoException(dto.getEmail());
         }
 
-        if (dto.getEmail() == null || !dto.getEmail().contains("@")) {
-            throw new ValidacionNegocioException("Formato de email inválido");
-        }
-        if (dto.getPassword() == null || dto.getPassword().length() < 6) {
-            throw new ValidacionNegocioException("La contraseña debe tener al menos 6 caracteres");
-        }
-
         Usuario usuario = new Usuario(
                 dto.getNombre(), dto.getEmail(), dto.getPassword(),
                 dto.getDireccion(), dto.getRol() != null ? dto.getRol() : Usuario.Rol.CLIENTE
         );
+        usuario.validar();
 
         Usuario guardado = usuarioRepository.save(usuario);
         log.info("Usuario creado - ID: {}, Email: {}", guardado.getId(), guardado.getEmail());

@@ -1,7 +1,7 @@
 package com.david.ecommerce.pedido.service;
 
 import com.david.ecommerce.application.pedido.PedidoUseCase;
-import com.david.ecommerce.common.exception.CarritoVacioException;
+
 import com.david.ecommerce.common.exception.RecursoNoEncontradoException;
 import com.david.ecommerce.common.exception.StockInsuficienteException;
 import com.david.ecommerce.domain.carrito.Carrito;
@@ -104,7 +104,7 @@ class PedidoServiceTest {
         when(carritoRepository.buscarPorUsuarioId(1L)).thenReturn(Optional.of(carrito));
 
         assertThatThrownBy(() -> pedidoUseCase.crearPedidoDesdeCarrito(1L))
-                .isInstanceOf(CarritoVacioException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("vacío");
     }
 

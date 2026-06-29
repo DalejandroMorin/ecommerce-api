@@ -29,7 +29,7 @@
 
 ## Architecture
 
-Mixed — migrating toward **hexagonal/clean architecture**:
+Follows **hexagonal/clean architecture**:
 
 ```
 Controller → UseCase (application, @Service @Transactional)
@@ -37,8 +37,10 @@ Controller → UseCase (application, @Service @Transactional)
         → Spring Data JpaRepository → Entity (JPA @Entity)
 ```
 
-- **Module `producto`**: fully hexagonal (`domain/`, `application/`, `infrastructure/`)
-- **Other modules** (`auth/`, `usuario/`, `carrito/`, `pedido/`): traditional layered
+- All modules (`producto`, `usuario`, `auth`, `carrito`, `pedido`) follow hexagonal structure:
+  - `domain/{modulo}/` — domain models + repository ports
+  - `application/{modulo}/` — use cases
+  - `infrastructure/` — JPA adapters, security, controllers
 - **Mappers** (`ProductoMapper`, `UsuarioMapper`, `CarritoMapper`, `PedidoMapper`): static methods `toEntity()` / `toDomain()` in `infrastructure/persistence/jpa/mapper/`
 
 ## Code Style Guidelines

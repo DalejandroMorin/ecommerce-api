@@ -1,6 +1,6 @@
 package com.david.ecommerce.infrastructure.security;
 
-import com.david.ecommerce.application.auth.UserDetailsImpl;
+import com.david.ecommerce.infrastructure.security.UserDetailsImpl;
 import com.david.ecommerce.domain.usuario.Usuario;
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;

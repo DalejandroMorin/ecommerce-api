@@ -1,6 +1,5 @@
 package com.david.ecommerce.application.pedido;
 
-import com.david.ecommerce.common.exception.CarritoVacioException;
 import com.david.ecommerce.common.exception.RecursoNoEncontradoException;
 import com.david.ecommerce.common.exception.StockInsuficienteException;
 import com.david.ecommerce.common.exception.ValidacionNegocioException;
@@ -53,9 +52,7 @@ public class PedidoUseCase {
         Carrito carrito = carritoRepository.buscarPorUsuarioId(usuarioId)
                 .orElseThrow(() -> new ValidacionNegocioException("El usuario no tiene un carrito activo"));
 
-        if (carrito.getItems().isEmpty()) {
-            throw new CarritoVacioException(usuarioId);
-        }
+        carrito.validar();
 
         for (ItemCarrito item : carrito.getItems()) {
             Producto producto = productoRepository.findById(item.getProductoId())
@@ -67,6 +64,7 @@ public class PedidoUseCase {
         }
 
         Pedido pedido = construirPedido(usuario, carrito);
+        pedido.validar();
 
         for (ItemCarrito item : carrito.getItems()) {
             Producto producto = productoRepository.findById(item.getProductoId())

@@ -1,4 +1,4 @@
-package com.david.ecommerce.application.auth;
+package com.david.ecommerce.infrastructure.security;
 
 import com.david.ecommerce.domain.usuario.Usuario;
 import org.springframework.security.core.GrantedAuthority;
