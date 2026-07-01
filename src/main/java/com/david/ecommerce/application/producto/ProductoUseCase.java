@@ -58,7 +58,7 @@ public class ProductoUseCase {
         existente.setNombre(dto.getNombre());
         existente.setDescripcion(dto.getDescripcion());
         existente.setPrecio(dto.getPrecio());
-        existente.setStock(dto.getStock());
+        existente.cambiarStock(dto.getStock());
         existente.setImagenUrl(dto.getImagenUrl());
         existente.setCategoria(dto.getCategoria());
         existente.validar();

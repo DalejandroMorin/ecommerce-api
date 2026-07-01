@@ -15,14 +15,12 @@ class ProductoMapperTest {
     @Test
     @DisplayName("toEntity luego toDomain preserva todos los campos (roundtrip)")
     void roundtrip_DominioAEntidadADominio_PreservaCampos() {
-        var domain = new Producto();
+        var domain = new Producto(
+                "Laptop Gamer", "Laptop con RTX 4090",
+                new BigDecimal("2500.00"), 10,
+                "https://ejemplo.com/img.jpg", Categoria.ELECTRONICA
+        );
         domain.setId(1L);
-        domain.setNombre("Laptop Gamer");
-        domain.setDescripcion("Laptop con RTX 4090");
-        domain.setPrecio(new BigDecimal("2500.00"));
-        domain.setStock(10);
-        domain.setImagenUrl("https://ejemplo.com/img.jpg");
-        domain.setCategoria(Categoria.ELECTRONICA);
         domain.setFechaCreacion(LocalDateTime.of(2025, 1, 15, 10, 0));
         domain.setFechaActualizacion(LocalDateTime.of(2025, 1, 15, 12, 0));
 
@@ -67,11 +65,7 @@ class ProductoMapperTest {
     @DisplayName("Todas las categorias del dominio mapean correctamente")
     void todasLasCategorias_MapeanCorrectamente() {
         for (Categoria domainCat : Categoria.values()) {
-            var domain = new Producto();
-            domain.setNombre("Test");
-            domain.setPrecio(BigDecimal.TEN);
-            domain.setStock(1);
-            domain.setCategoria(domainCat);
+            var domain = new Producto("Test", null, BigDecimal.TEN, 1, null, domainCat);
 
             var entity = ProductoMapper.toEntity(domain);
             var result = ProductoMapper.toDomain(entity);

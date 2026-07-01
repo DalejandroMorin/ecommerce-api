@@ -86,10 +86,7 @@ class JpaPedidoRepositoryAdapterTest extends AbstractIntegrationTest {
     @Test
     @DisplayName("save crea un nuevo pedido con detalles")
     void save_Crear_InsertaPedidoYDetalles() {
-        var pedido = new Pedido();
-        pedido.setUsuarioId(usuarioId);
-        pedido.setTotal(new BigDecimal("300.00"));
-        pedido.setEstado(EstadoPedido.PENDIENTE);
+        var pedido = new Pedido(usuarioId, EstadoPedido.PENDIENTE);
         pedido.setFechaPedido(LocalDateTime.now());
 
         var detalle = new DetallePedido(productoId, "Producto Test", 3,
@@ -110,7 +107,7 @@ class JpaPedidoRepositoryAdapterTest extends AbstractIntegrationTest {
         var creado = crearPedidoPendiente();
 
         var pedido = adapter.findById(creado.getId()).orElseThrow();
-        pedido.setEstado(EstadoPedido.PAGADO);
+        pedido.cambiarEstado(EstadoPedido.PAGADO);
 
         var resultado = adapter.save(pedido);
 
@@ -150,10 +147,7 @@ class JpaPedidoRepositoryAdapterTest extends AbstractIntegrationTest {
     @Test
     @DisplayName("@PrePersist sobreescribe subtotal en save con detalles (EC-4)")
     void save_ConDetalle_SubtotalSobreescritoPorPrePersist() {
-        var pedido = new Pedido();
-        pedido.setUsuarioId(usuarioId);
-        pedido.setTotal(new BigDecimal("300.00"));
-        pedido.setEstado(EstadoPedido.PENDIENTE);
+        var pedido = new Pedido(usuarioId, EstadoPedido.PENDIENTE);
         pedido.setFechaPedido(LocalDateTime.now());
 
         var detalle = new DetallePedido(productoId, "Producto Test", 3,
@@ -172,10 +166,7 @@ class JpaPedidoRepositoryAdapterTest extends AbstractIntegrationTest {
     }
 
     private Pedido crearPedidoPendiente() {
-        var pedido = new Pedido();
-        pedido.setUsuarioId(usuarioId);
-        pedido.setTotal(new BigDecimal("300.00"));
-        pedido.setEstado(EstadoPedido.PENDIENTE);
+        var pedido = new Pedido(usuarioId, EstadoPedido.PENDIENTE);
         pedido.setFechaPedido(LocalDateTime.now());
 
         var detalle = new DetallePedido(productoId, "Producto Test", 3,

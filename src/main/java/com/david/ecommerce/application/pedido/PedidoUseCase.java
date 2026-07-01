@@ -58,7 +58,7 @@ public class PedidoUseCase {
         for (ItemCarrito item : carrito.getItems()) {
             Producto producto = productoRepository.findById(item.getProductoId())
                     .orElseThrow(() -> new RecursoNoEncontradoException("Producto", item.getProductoId()));
-            if (producto.getStock() < item.getCantidad()) {
+            if (!producto.tieneStockSuficiente(item.getCantidad())) {
                 throw new StockInsuficienteException(
                         producto.getNombre(), producto.getStock(), item.getCantidad());
             }
@@ -70,7 +70,7 @@ public class PedidoUseCase {
         for (ItemCarrito item : carrito.getItems()) {
             Producto producto = productoRepository.findById(item.getProductoId())
                     .orElseThrow(() -> new RecursoNoEncontradoException("Producto", item.getProductoId()));
-            producto.setStock(producto.getStock() - item.getCantidad());
+            producto.descontarStock(item.getCantidad());
             productoRepository.save(producto);
         }
 
@@ -88,7 +88,6 @@ public class PedidoUseCase {
     private Pedido construirPedido(Usuario usuario, Carrito carrito) {
         Pedido pedido = new Pedido(usuario.getId(), EstadoPedido.PENDIENTE);
 
-        BigDecimal total = BigDecimal.ZERO;
         for (ItemCarrito item : carrito.getItems()) {
             Producto producto = productoRepository.findById(item.getProductoId())
                     .orElseThrow(() -> new RecursoNoEncontradoException("Producto", item.getProductoId()));
@@ -100,9 +99,7 @@ public class PedidoUseCase {
             );
 
             pedido.agregarDetalle(detalle);
-            total = total.add(detalle.getSubtotal());
         }
-        pedido.setTotal(total);
         return pedido;
     }
 
@@ -141,7 +138,7 @@ public class PedidoUseCase {
     public PedidoResponseDTO actualizarEstado(Long id, EstadoPedido nuevoEstado) {
         Pedido pedido = pedidoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Pedido", id));
-        pedido.setEstado(nuevoEstado);
+        pedido.cambiarEstado(nuevoEstado);
         Pedido actualizado = pedidoRepository.save(pedido);
 
         log.info("Estado de pedido actualizado - ID: {}, Nuevo estado: {}", id, nuevoEstado);
@@ -154,24 +151,16 @@ public class PedidoUseCase {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Pedido", id));
 
         EstadoPedido estadoAnterior = pedido.getEstado();
-
-        if (pedido.getEstado() == EstadoPedido.CANCELADO) {
-            throw new ValidacionNegocioException("El pedido ya está cancelado");
-        }
-        if (pedido.getEstado() == EstadoPedido.ENTREGADO) {
-            throw new ValidacionNegocioException("No se puede cancelar un pedido entregado");
-        }
+        pedido.cancelar();
 
         for (DetallePedido detalle : pedido.getDetalles()) {
             Producto producto = productoRepository.findById(detalle.getProductoId())
                     .orElseThrow(() -> new RecursoNoEncontradoException("Producto", detalle.getProductoId()));
-            producto.setStock(producto.getStock() + detalle.getCantidad());
+            producto.restaurarStock(detalle.getCantidad());
             productoRepository.save(producto);
         }
 
-        pedido.setEstado(EstadoPedido.CANCELADO);
         pedidoRepository.save(pedido);
-
         log.warn("Pedido cancelado - ID: {}, Estado anterior: {}", id, estadoAnterior);
     }
 }

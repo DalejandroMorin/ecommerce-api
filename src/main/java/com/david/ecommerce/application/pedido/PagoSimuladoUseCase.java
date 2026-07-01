@@ -1,7 +1,6 @@
 package com.david.ecommerce.application.pedido;
 
 import com.david.ecommerce.common.exception.ValidacionNegocioException;
-import com.david.ecommerce.domain.common.EstadoPedido;
 import com.david.ecommerce.domain.pedido.Pedido;
 import com.david.ecommerce.domain.pedido.PedidoRepository;
 import org.slf4j.Logger;
@@ -29,16 +28,11 @@ public class PagoSimuladoUseCase {
         Pedido pedido = pedidoRepository.findById(pedidoId)
                 .orElseThrow(() -> new ValidacionNegocioException("Pedido no encontrado"));
 
-        if (pedido.getEstado() != EstadoPedido.PENDIENTE) {
-            throw new ValidacionNegocioException(
-                    "Solo se pueden pagar pedidos en estado PENDIENTE. Estado actual: " + pedido.getEstado());
-        }
-
         String numeroTransaccion = UUID.randomUUID().toString();
         boolean exitoso = simularResultado(pedido.getTotal());
 
         if (exitoso) {
-            pedido.setEstado(EstadoPedido.PAGADO);
+            pedido.pagar();
             pedidoRepository.save(pedido);
 
             log.info("Pago exitoso - Pedido: {}, Transacción: {}, Monto: ${}",

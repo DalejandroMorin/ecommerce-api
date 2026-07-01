@@ -1,5 +1,6 @@
 package com.david.ecommerce.domain.pedido;
 
+import com.david.ecommerce.common.exception.ValidacionNegocioException;
 import com.david.ecommerce.domain.common.EstadoPedido;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class Pedido {
 
     public void agregarDetalle(DetallePedido detalle) {
         detalles.add(detalle);
+        calcularTotal();
     }
 
     public void validar() {
@@ -38,6 +40,41 @@ public class Pedido {
 
     public void removerDetalle(DetallePedido detalle) {
         detalles.remove(detalle);
+        calcularTotal();
+    }
+
+    public void calcularTotal() {
+        this.total = detalles.stream()
+                .map(DetallePedido::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public boolean puedeCancelar() {
+        return estado != EstadoPedido.CANCELADO && estado != EstadoPedido.ENTREGADO;
+    }
+
+    public void cancelar() {
+        if (!puedeCancelar()) {
+            throw new ValidacionNegocioException(
+                    "No se puede cancelar un pedido en estado: " + estado);
+        }
+        this.estado = EstadoPedido.CANCELADO;
+    }
+
+    public boolean puedePagar() {
+        return estado == EstadoPedido.PENDIENTE;
+    }
+
+    public void pagar() {
+        if (!puedePagar()) {
+            throw new ValidacionNegocioException(
+                    "Solo se pueden pagar pedidos en estado PENDIENTE. Estado actual: " + estado);
+        }
+        this.estado = EstadoPedido.PAGADO;
+    }
+
+    public void cambiarEstado(EstadoPedido nuevoEstado) {
+        this.estado = nuevoEstado;
     }
 
     public Long getId() { return id; }
@@ -49,7 +86,7 @@ public class Pedido {
     public LocalDateTime getFechaPedido() { return fechaPedido; }
     public void setFechaPedido(LocalDateTime fechaPedido) { this.fechaPedido = fechaPedido; }
     public BigDecimal getTotal() { return total; }
-    public void setTotal(BigDecimal total) { this.total = total; }
+    private void setTotal(BigDecimal total) { this.total = total; }
     public EstadoPedido getEstado() { return estado; }
-    public void setEstado(EstadoPedido estado) { this.estado = estado; }
+    private void setEstado(EstadoPedido estado) { this.estado = estado; }
 }

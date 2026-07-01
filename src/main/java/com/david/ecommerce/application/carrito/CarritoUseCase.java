@@ -66,7 +66,7 @@ public class CarritoUseCase {
         Producto producto = productoRepository.findById(productoId)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Producto", productoId));
 
-        if (producto.getStock() < cantidad) {
+        if (!producto.tieneStockSuficiente(cantidad)) {
             throw new StockInsuficienteException(producto.getNombre(), producto.getStock(), cantidad);
         }
 
@@ -103,15 +103,13 @@ public class CarritoUseCase {
         ItemCarrito item = carritoRepository.buscarItemPorId(itemId)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Item de carrito", itemId));
 
-        boolean pertenece = carrito.getItems().stream()
-                .anyMatch(i -> i.getId().equals(itemId));
-        if (!pertenece) {
+        if (!carrito.contieneItem(itemId)) {
             throw new ValidacionNegocioException("El item no pertenece al carrito del usuario");
         }
 
         Producto producto = productoRepository.findById(item.getProductoId())
                 .orElseThrow(() -> new RecursoNoEncontradoException("Producto", item.getProductoId()));
-        if (producto.getStock() < nuevaCantidad) {
+        if (!producto.tieneStockSuficiente(nuevaCantidad)) {
             throw new StockInsuficienteException(producto.getNombre(), producto.getStock(), nuevaCantidad);
         }
 
@@ -130,9 +128,7 @@ public class CarritoUseCase {
         ItemCarrito item = carritoRepository.buscarItemPorId(itemId)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Item de carrito", itemId));
 
-        boolean pertenece = carrito.getItems().stream()
-                .anyMatch(i -> i.getId().equals(itemId));
-        if (!pertenece) {
+        if (!carrito.contieneItem(itemId)) {
             throw new ValidacionNegocioException("El item no pertenece al carrito del usuario");
         }
 
