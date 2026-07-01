@@ -20,6 +20,10 @@ public class Carrito {
             throw new IllegalArgumentException("El carrito no puede estar vacío");
     }
 
+    public boolean contieneItem(Long itemId) {
+        return items.stream().anyMatch(item -> item.getId().equals(itemId));
+    }
+
     public void removerItem(ItemCarrito item) {
         items.remove(item);
     }

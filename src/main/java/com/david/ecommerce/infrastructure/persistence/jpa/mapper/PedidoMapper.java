@@ -29,15 +29,13 @@ public class PedidoMapper {
 
     public static Pedido toDomain(PedidoEntity entity) {
         if (entity == null) return null;
-        Pedido domain = new Pedido();
+        Pedido domain = new Pedido(entity.getUsuario().getId(), entity.getEstado());
         domain.setId(entity.getId());
-        domain.setUsuarioId(entity.getUsuario().getId());
         domain.setFechaPedido(entity.getFechaPedido());
-        domain.setTotal(entity.getTotal());
-        domain.setEstado(entity.getEstado());
         domain.setDetalles(entity.getDetalles().stream()
                 .map(PedidoMapper::toDomainDetalle)
                 .collect(Collectors.toList()));
+        domain.calcularTotal();
         return domain;
     }
 

@@ -51,11 +51,8 @@ class CarritoServiceTest {
         usuario.setId(1L);
         usuario.setNombre("Edgar");
 
-        producto = new Producto();
+        producto = new Producto("Tablet", null, new BigDecimal("300.00"), 5, null, null);
         producto.setId(1L);
-        producto.setNombre("Tablet");
-        producto.setPrecio(new BigDecimal("300.00"));
-        producto.setStock(5);
 
         carrito = new Carrito();
         carrito.setId(1L);

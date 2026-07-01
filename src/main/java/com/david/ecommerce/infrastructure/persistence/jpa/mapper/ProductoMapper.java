@@ -23,14 +23,12 @@ public class ProductoMapper {
 
     public static Producto toDomain(ProductoEntity entity) {
         if (entity == null) return null;
-        Producto domain = new Producto();
+        Producto domain = new Producto(
+                entity.getNombre(), entity.getDescripcion(),
+                entity.getPrecio(), entity.getStock(),
+                entity.getImagenUrl(), entity.getCategoria()
+        );
         domain.setId(entity.getId());
-        domain.setNombre(entity.getNombre());
-        domain.setDescripcion(entity.getDescripcion());
-        domain.setPrecio(entity.getPrecio());
-        domain.setStock(entity.getStock());
-        domain.setImagenUrl(entity.getImagenUrl());
-        domain.setCategoria(entity.getCategoria());
         domain.setFechaCreacion(entity.getFechaCreacion());
         domain.setFechaActualizacion(entity.getFechaActualizacion());
         return domain;

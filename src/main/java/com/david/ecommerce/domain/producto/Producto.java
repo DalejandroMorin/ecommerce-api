@@ -1,5 +1,6 @@
 package com.david.ecommerce.domain.producto;
 
+import com.david.ecommerce.common.exception.StockInsuficienteException;
 import com.david.ecommerce.domain.common.Categoria;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -43,7 +44,26 @@ public class Producto {
     public BigDecimal getPrecio() { return precio; }
     public void setPrecio(BigDecimal precio) { this.precio = precio; }
     public Integer getStock() { return stock; }
-    public void setStock(Integer stock) { this.stock = stock; }
+    private void setStock(Integer stock) { this.stock = stock; }
+
+    public boolean tieneStockSuficiente(Integer cantidad) {
+        return stock != null && stock >= cantidad;
+    }
+
+    public void descontarStock(Integer cantidad) {
+        if (!tieneStockSuficiente(cantidad)) {
+            throw new StockInsuficienteException(nombre, stock, cantidad);
+        }
+        this.stock -= cantidad;
+    }
+
+    public void restaurarStock(Integer cantidad) {
+        this.stock += cantidad;
+    }
+
+    public void cambiarStock(Integer nuevoStock) {
+        this.stock = nuevoStock;
+    }
     public String getImagenUrl() { return imagenUrl; }
     public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
     public Categoria getCategoria() { return categoria; }

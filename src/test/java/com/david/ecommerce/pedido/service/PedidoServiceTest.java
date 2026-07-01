@@ -57,11 +57,8 @@ class PedidoServiceTest {
         usuario.setNombre("Edgar");
         usuario.setEmail("edgar@email.com");
 
-        producto = new Producto();
+        producto = new Producto("Laptop", null, new BigDecimal("1000.00"), 10, null, null);
         producto.setId(1L);
-        producto.setNombre("Laptop");
-        producto.setPrecio(new BigDecimal("1000.00"));
-        producto.setStock(10);
 
         carrito = new Carrito();
         carrito.setId(1L);
@@ -128,18 +125,14 @@ class PedidoServiceTest {
     @Test
     @DisplayName("Cancelar pedido devuelve stock al producto")
     void cancelarPedido_DevuelveStock() {
-        Producto productoConStockBajo = new Producto();
+        Producto productoConStockBajo = new Producto("Mouse", null, new BigDecimal("50.00"), 3, null, null);
         productoConStockBajo.setId(2L);
-        productoConStockBajo.setNombre("Mouse");
-        productoConStockBajo.setPrecio(new BigDecimal("50.00"));
-        productoConStockBajo.setStock(3);
 
         Pedido pedido = new Pedido(1L, EstadoPedido.PENDIENTE);
         pedido.setId(1L);
         DetallePedido detalle = new DetallePedido(2L, "Mouse", 2, new BigDecimal("50.00"), new BigDecimal("100.00"));
         detalle.setId(1L);
         pedido.agregarDetalle(detalle);
-        pedido.setTotal(new BigDecimal("100.00"));
 
         when(pedidoRepository.findById(1L)).thenReturn(Optional.of(pedido));
         when(productoRepository.findById(2L)).thenReturn(Optional.of(productoConStockBajo));
@@ -160,7 +153,7 @@ class PedidoServiceTest {
 
         assertThatThrownBy(() -> pedidoUseCase.cancelarPedido(1L))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("ya está cancelado");
+                .hasMessageContaining("No se puede cancelar un pedido en estado: CANCELADO");
     }
 
     @Test

@@ -85,12 +85,8 @@ class JpaProductoRepositoryAdapterTest extends AbstractIntegrationTest {
     @Test
     @DisplayName("save crea un nuevo producto")
     void save_Crear_RetornaProductoCreado() {
-        var nuevo = new Producto();
-        nuevo.setNombre("Teclado Mecánico");
-        nuevo.setDescripcion("Teclado RGB");
-        nuevo.setPrecio(new BigDecimal("200.00"));
-        nuevo.setStock(15);
-        nuevo.setCategoria(Categoria.ELECTRONICA);
+        var nuevo = new Producto("Teclado Mecánico", "Teclado RGB",
+                new BigDecimal("200.00"), 15, null, Categoria.ELECTRONICA);
 
         var resultado = adapter.save(nuevo);
 
@@ -106,7 +102,7 @@ class JpaProductoRepositoryAdapterTest extends AbstractIntegrationTest {
     void save_Actualizar_RetornaProductoActualizado() {
         var productoDomain = adapter.findById(laptopEntity.getId()).orElseThrow();
         productoDomain.setPrecio(new BigDecimal("2300.00"));
-        productoDomain.setStock(8);
+        productoDomain.cambiarStock(8);
 
         var resultado = adapter.save(productoDomain);
 
