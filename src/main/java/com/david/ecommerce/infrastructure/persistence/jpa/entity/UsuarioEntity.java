@@ -2,17 +2,21 @@ package com.david.ecommerce.infrastructure.persistence.jpa.entity;
 
 import com.david.ecommerce.domain.common.Rol;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@AllArgsConstructor
 public class UsuarioEntity {
 
     @Id
@@ -22,10 +26,11 @@ public class UsuarioEntity {
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    @EqualsAndHashCode.Include
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String password;
 
     @Column(length = 255)
@@ -37,6 +42,9 @@ public class UsuarioEntity {
 
     @Column(name = "fecha_registro", updatable = false)
     private LocalDateTime fechaRegistro;
+
+    @Version
+    private Long version;
 
     @PrePersist
     protected void onCreate() {

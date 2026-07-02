@@ -3,6 +3,7 @@ package com.david.ecommerce.infrastructure.persistence.jpa.adapter;
 import com.david.ecommerce.domain.common.Categoria;
 import com.david.ecommerce.domain.producto.Producto;
 import com.david.ecommerce.domain.producto.ProductoRepository;
+import com.david.ecommerce.infrastructure.persistence.jpa.entity.ProductoEntity;
 import com.david.ecommerce.infrastructure.persistence.jpa.mapper.ProductoMapper;
 import com.david.ecommerce.infrastructure.persistence.jpa.repository.ProductoJpaRepository;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,19 @@ public class JpaProductoRepositoryAdapter implements ProductoRepository {
 
     @Override
     public Producto save(Producto producto) {
-        var entity = ProductoMapper.toEntity(producto);
+        ProductoEntity entity;
+        if (producto.getId() != null) {
+            entity = jpaRepository.findById(producto.getId())
+                    .orElseGet(() -> ProductoMapper.toEntity(producto));
+            entity.setNombre(producto.getNombre());
+            entity.setDescripcion(producto.getDescripcion());
+            entity.setPrecio(producto.getPrecio());
+            entity.setStock(producto.getStock());
+            entity.setImagenUrl(producto.getImagenUrl());
+            entity.setCategoria(producto.getCategoria());
+        } else {
+            entity = ProductoMapper.toEntity(producto);
+        }
         var saved = jpaRepository.save(entity);
         return ProductoMapper.toDomain(saved);
     }
