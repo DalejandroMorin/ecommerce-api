@@ -78,7 +78,17 @@ public class JpaPedidoRepositoryAdapter implements PedidoRepository {
                 .map(detalle -> {
                     ProductoEntity productoEntity = productoJpaRepository.findById(detalle.getProductoId())
                             .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + detalle.getProductoId()));
-                    return PedidoMapper.toEntityDetalle(detalle, entity, productoEntity);
+                    DetallePedidoEntity detalleEntity;
+                    if (detalle.getId() != null && entity.getId() != null) {
+                        detalleEntity = detallePedidoJpaRepository.findById(detalle.getId())
+                                .orElseGet(() -> PedidoMapper.toEntityDetalle(detalle, entity, productoEntity));
+                        detalleEntity.setCantidad(detalle.getCantidad());
+                        detalleEntity.setPrecioUnitario(detalle.getPrecioUnitario());
+                        detalleEntity.setSubtotal(detalle.getSubtotal());
+                    } else {
+                        detalleEntity = PedidoMapper.toEntityDetalle(detalle, entity, productoEntity);
+                    }
+                    return detalleEntity;
                 })
                 .collect(Collectors.toList());
         entity.setDetalles(detalleEntities);

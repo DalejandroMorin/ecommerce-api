@@ -2,6 +2,7 @@ package com.david.ecommerce.infrastructure.persistence.jpa.adapter;
 
 import com.david.ecommerce.domain.usuario.Usuario;
 import com.david.ecommerce.domain.usuario.UsuarioRepository;
+import com.david.ecommerce.infrastructure.persistence.jpa.entity.UsuarioEntity;
 import com.david.ecommerce.infrastructure.persistence.jpa.mapper.UsuarioMapper;
 import com.david.ecommerce.infrastructure.persistence.jpa.repository.UsuarioJpaRepository;
 import org.springframework.stereotype.Repository;
@@ -45,7 +46,18 @@ public class JpaUsuarioRepositoryAdapter implements UsuarioRepository {
 
     @Override
     public Usuario save(Usuario usuario) {
-        var entity = UsuarioMapper.toEntity(usuario);
+        UsuarioEntity entity;
+        if (usuario.getId() != null) {
+            entity = jpaRepository.findById(usuario.getId())
+                    .orElseGet(() -> UsuarioMapper.toEntity(usuario));
+            entity.setNombre(usuario.getNombre());
+            entity.setEmail(usuario.getEmail());
+            entity.setPassword(usuario.getPassword());
+            entity.setDireccion(usuario.getDireccion());
+            entity.setRol(usuario.getRol());
+        } else {
+            entity = UsuarioMapper.toEntity(usuario);
+        }
         var saved = jpaRepository.save(entity);
         return UsuarioMapper.toDomain(saved);
     }
